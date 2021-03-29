@@ -1,1 +1,4 @@
 logzero
+requests
+bs4
+
