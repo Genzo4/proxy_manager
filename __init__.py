@@ -76,6 +76,8 @@ class ProxyManager:
         return kolvo
 
     def _load_list_from_fateproxy(self):
+        self.__proxy_list.clear()
+
         spisok = self._get_url(self.FATE_PROXY_URL)
 
         for line in spisok.splitlines():
