@@ -26,7 +26,7 @@ class ProxyManager:
 
         print(self.__proxy_list[0], self.__proxy_list[1], self.__proxy_list[2])
 
-    def get_random(self) -> Proxy:
+    def get_random(self) -> Proxy or None:
         """
         Получить следующий рандомный прокси
         :return: Proxy
@@ -45,10 +45,10 @@ class ProxyManager:
 
         return select_proxy
 
-    def _get_next_candidats(self):
+    def _get_next_candidats(self) -> list:
         """
         Получить следующих кандидатов на выдачу (у кого самый маленький used)
-        :return: Proxy []
+        :return: list
         """
 
         min_used = self._get_min_used()
