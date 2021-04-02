@@ -11,6 +11,14 @@ class Proxy:
         self.__used = 0
         self.__errors = 0
 
+    def use(self):
+        """
+        Используем текущий прокси
+        :return: None
+        """
+
+        self.__used += 1
+
     @property
     def ip(self):
         return self.__ip

@@ -4,6 +4,7 @@ from proxy import Proxy
 import requests
 from bs4 import BeautifulSoup
 import json
+import random
 
 
 class ProxyManager:
@@ -24,6 +25,55 @@ class ProxyManager:
         self._load_list_from_fateproxy()
 
         print(self.__proxy_list[0], self.__proxy_list[1], self.__proxy_list[2])
+
+    def get_random(self) -> Proxy:
+        """
+        Получить следующий рандомный прокси
+        :return: Proxy
+        """
+
+        if len(self.__proxy_list) == 0:
+            return None
+
+        candidats = self._get_next_candidats()
+
+        if len(candidats) == 0:
+            return None
+
+        select_proxy = random.choice(candidats)
+        select_proxy.use()
+
+        return select_proxy
+
+    def _get_next_candidats(self):
+        """
+        Получить следующих кандидатов на выдачу (у кого самый маленький used)
+        :return: Proxy []
+        """
+
+        min_used = self._get_min_used()
+
+        candidats = []
+        for el in self.__proxy_list:
+            if el.used == min_used:
+                candidats.append(el)
+
+        return candidats
+
+    def _get_min_used(self):
+        """
+        Число минимального использования прокси
+        :return: int
+        """
+
+        kolvo = -1
+        for el in self.__proxy_list:
+            if kolvo == -1:
+                kolvo = el.used
+            elif el.used < kolvo:
+                kolvo = el.used
+
+        return kolvo
 
     def _load_list_from_fateproxy(self):
         spisok = self._get_url(self.FATE_PROXY_URL)
@@ -81,4 +131,6 @@ if __name__ == "__main__":
 
     proxy_list = ProxyManager(protocol="https", anonymity=True)
 
-
+    for i in range(1, 1000):
+        pr = proxy_list.get_random()
+        print(i, ": ", pr, "(", pr.used, ")")
