@@ -1,8 +1,6 @@
 import logzero
-from logzero import logger
-from proxy import Proxy
+from proxy_manager.proxy import Proxy
 import requests
-from bs4 import BeautifulSoup
 import json
 import random
 
