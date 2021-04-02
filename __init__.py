@@ -1,8 +1,9 @@
 import logzero
 from logzero import logger
-#from proxy import Proxy
+from proxy import Proxy
 import requests
 from bs4 import BeautifulSoup
+import json
 
 
 class ProxyManager:
@@ -24,18 +25,41 @@ class ProxyManager:
 
         self._load_list_from_fateproxy()
 
+        print(self.__proxy_list[0], self.__proxy_list[1], self.__proxy_list[2])
+
     def _load_list_from_fateproxy(self):
-        bs = self._get_url(self.FATE_PROXY_URL)
-        print(bs)
+        spisok = self._get_url(self.FATE_PROXY_URL)
+
+        for line in spisok.splitlines():
+            load_proxy = json.loads(line)
+
+            add = False
+            if load_proxy['type'] == self.protocol:
+                if self.anonymity:
+                    if load_proxy['anonymity'] == 'anonymous' or load_proxy['anonymity'] == 'high_anonymous':
+                        add = True
+                else:
+                    add = True
+
+            if add:
+                self._add_proxy(load_proxy['host'], load_proxy['port'], load_proxy['type'], load_proxy['anonymity'])
+
+    def _add_proxy(self, ip: str, port: str, protocol: str, anonymity: bool):
+        """
+        Добавление загруженного прокси в список прокси
+        """
+
+        new_proxy = Proxy(ip, port, protocol, anonymity)
+
+        if new_proxy not in self.__proxy_list:
+            self.__proxy_list.append(new_proxy)
 
     def _get_url(self, proxy_url: str):
         r = requests.get(proxy_url, headers={
             "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/60.0"
             })
 
-        #return r.text
-        return BeautifulSoup(r.text, "lxml")
-
+        return r.text
 
     @property
     def protocol(self):
