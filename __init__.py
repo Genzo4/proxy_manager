@@ -11,8 +11,6 @@ class ProxyManager:
     Прокси менеджер для скрапперов
     """
 
-    PROXY_PUB_URL = "http://pubproxy.com/api/proxy?limit=5&format=txt&https=true&type=https"
-    # "http://pubproxy.com/api/proxy?limit=5&format=txt&https=true&type=http&level=anonymous&user_agent=true&cookies=true"
     FATE_PROXY_URL = "https://raw.githubusercontent.com/fate0/proxylist/master/proxy.list"
 
     def __init__(self, protocol="http", anonymity=False):
@@ -81,5 +79,6 @@ class ProxyManager:
 if __name__ == "__main__":
     logzero.loglevel(logzero.DEBUG)
 
-    proxy = ProxyManager(protocol="https", anonymity=True)
+    proxy_list = ProxyManager(protocol="https", anonymity=True)
+
 
