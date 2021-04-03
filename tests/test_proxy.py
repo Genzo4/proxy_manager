@@ -1,5 +1,5 @@
-import pytest
 from proxy_manager.proxy import Proxy
+from random import Random
 
 
 def test_create_1():
@@ -39,3 +39,24 @@ def test_use():
     assert proxy.used == 1
     proxy.use()
     assert proxy.used == 2
+
+
+def test_eq():
+    proxy_1 = Proxy('1.1.1.1', '1234')
+    proxy_2 = Proxy('1.1.1.1', '1234')
+    assert proxy_1 == proxy_2
+    proxy_3 = Proxy('1.1.1.1', '124')
+    assert proxy_1 != proxy_3
+    proxy_4 = Proxy('1.1.2.1', '1234')
+    assert proxy_1 != proxy_4
+    proxy_5 = Proxy('1.1.3.1', '1334')
+    assert proxy_1 != proxy_5
+    rnd = Random()
+    #assert proxy_1 == rnd
+
+
+def test_print_proxy(capsys):
+    proxy = Proxy('1.1.1.1', '1234')
+    print(proxy)
+    captured = capsys.readouterr()
+    assert captured.out == '1.1.1.1:1234\n'
