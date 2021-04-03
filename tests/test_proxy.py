@@ -1,3 +1,4 @@
+import pytest
 from proxy_manager.proxy import Proxy
 from random import Random
 
@@ -52,7 +53,8 @@ def test_eq():
     proxy_5 = Proxy('1.1.3.1', '1334')
     assert proxy_1 != proxy_5
     rnd = Random()
-    #assert proxy_1 == rnd
+    with pytest.raises(TypeError):
+        proxy_1 == rnd
 
 
 def test_print_proxy(capsys):
