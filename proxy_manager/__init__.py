@@ -1,4 +1,3 @@
-import logzero
 from proxy_manager.proxy import Proxy
 import requests
 import json
@@ -124,13 +123,3 @@ class ProxyManager:
     @anonymity.setter
     def anonymity(self, anonymity=False):
         self.__anonymity = anonymity
-
-
-if __name__ == "__main__":
-    logzero.loglevel(logzero.DEBUG)
-
-    proxy_list = ProxyManager(protocol="https", anonymity=True)
-
-    for i in range(1, 1000):
-        pr = proxy_list.get_random()
-        print(i, ": ", pr, "(", pr.used, ")")
