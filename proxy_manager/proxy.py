@@ -75,4 +75,4 @@ class Proxy:
         """Overrides the default implementation"""
         if isinstance(other, Proxy):
             return self.ip == other.ip and self.port == other.port
-        return NotImplemented
+        raise TypeError
