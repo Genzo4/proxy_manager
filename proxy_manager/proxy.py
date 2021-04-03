@@ -4,12 +4,12 @@ class Proxy:
     """
 
     def __init__(self, ip: str, port: str, protocol="http", anonymity=False):
-        self.__ip = ip
-        self.__port = port
-        self.__protocol = protocol
-        self.__anonymity = anonymity
-        self.__used = 0
-        self.__errors = 0
+        self.ip = ip
+        self.port = port
+        self.protocol = protocol
+        self.anonymity = anonymity
+        self.used = 0
+        self.errors = 0
 
     def use(self):
         """
