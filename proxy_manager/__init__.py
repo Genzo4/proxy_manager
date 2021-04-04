@@ -21,8 +21,6 @@ class ProxyManager:
 
         self._load_list_from_fateproxy()
 
-        print(self.__proxy_list[0], self.__proxy_list[1], self.__proxy_list[2])
-
     def get_random(self) -> Proxy or None:
         """
         Получить следующий рандомный прокси
