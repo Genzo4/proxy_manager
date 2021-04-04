@@ -15,8 +15,8 @@ class ProxyManager:
         """
         Конструктор
         """
-        self.__protocol = protocol
-        self.__anonymity = anonymity
+        self.protocol = protocol
+        self.anonymity = anonymity
         self.__proxy_list = []
 
         self._load_list_from_fateproxy()
