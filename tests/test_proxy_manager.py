@@ -124,3 +124,55 @@ def test_get_next_candidats():
     assert pm.proxy_list[1] == candidats[1]
     assert pm.proxy_list[2] == candidats[2]
 
+
+def test_get_random_1():
+    """
+    Проверка get_random на выдачу разных прокси
+    """
+
+    pm = ProxyManager(load_fate_proxy=False)
+    pm._add_proxy('1.2.3.4', '1234', 'http', False)
+    pm._add_proxy('4.3.2.1', '234', 'https', True)
+    pm._add_proxy('4.2.1.3', '4321', 'https', True)
+
+    proxy = pm.get_random()
+    assert proxy in pm.proxy_list
+    i_1 = pm.proxy_list.index(proxy)
+
+    proxy = pm.get_random()
+    assert proxy in pm.proxy_list
+    i_2 = pm.proxy_list.index(proxy)
+    assert i_2 != i_1
+
+    proxy = pm.get_random()
+    assert proxy in pm.proxy_list
+    i_3 = pm.proxy_list.index(proxy)
+    assert i_3 != i_2 and i_3 != i_1
+
+    proxy = pm.get_random()
+    assert proxy in pm.proxy_list
+
+
+def test_get_random_2():
+    """
+    Проверка get_random на выдачу случайных результатов
+    """
+
+    proxys = []
+    kolvo_otl = 0   # Количество отличающихся элементов
+
+    for i in range(10):
+        pm = ProxyManager(load_fate_proxy=False)
+        pm._add_proxy('1.2.3.4', '1234', 'http', False)
+        pm._add_proxy('4.3.2.1', '234', 'https', True)
+        pm._add_proxy('4.2.1.3', '4321', 'https', True)
+        pm._add_proxy('4.4.4.4', '4444', 'https', True)
+        pm._add_proxy('5.5.5.5', '5555', 'https', True)
+
+        proxy = pm.get_random()
+        j = pm.proxy_list.index(proxy)
+        if j not in proxys:
+            kolvo_otl += 1
+        proxys.append(j)
+
+    assert kolvo_otl >= 3
