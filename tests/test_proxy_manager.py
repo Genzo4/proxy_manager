@@ -89,3 +89,34 @@ def test_get_min_used_5():
     assert pm._get_min_used() == 1
     pm.proxy_list[1].use()
     assert pm._get_min_used() == 2
+
+
+def test_get_next_candidats():
+    pm = ProxyManager(load_fate_proxy=False)
+    pm._add_proxy('1.2.3.4', '1234', 'http', False)
+    pm._add_proxy('4.3.2.1', '234', 'https', True)
+    pm._add_proxy('4.2.1.3', '4321', 'https', True)
+    candidats = pm._get_next_candidats()
+    assert len(candidats) == 3
+    assert pm.proxy_list[0] == candidats[0]
+    assert pm.proxy_list[1] == candidats[1]
+    assert pm.proxy_list[2] == candidats[2]
+
+    pm.proxy_list[1].use()
+    candidats = pm._get_next_candidats()
+    assert len(candidats) == 2
+    assert pm.proxy_list[0] == candidats[0]
+    assert pm.proxy_list[2] == candidats[1]
+
+    pm.proxy_list[0].use()
+    candidats = pm._get_next_candidats()
+    assert len(candidats) == 1
+    assert pm.proxy_list[2] == candidats[0]
+
+    pm.proxy_list[2].use()
+    candidats = pm._get_next_candidats()
+    assert len(candidats) == 3
+    assert pm.proxy_list[0] == candidats[0]
+    assert pm.proxy_list[1] == candidats[1]
+    assert pm.proxy_list[2] == candidats[2]
+
