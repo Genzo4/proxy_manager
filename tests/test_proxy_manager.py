@@ -93,6 +93,10 @@ def test_get_min_used_5():
 
 def test_get_next_candidats():
     pm = ProxyManager(load_fate_proxy=False)
+    candidats = pm._get_next_candidats()
+    assert len(candidats) == 0
+
+    pm = ProxyManager(load_fate_proxy=False)
     pm._add_proxy('1.2.3.4', '1234', 'http', False)
     pm._add_proxy('4.3.2.1', '234', 'https', True)
     pm._add_proxy('4.2.1.3', '4321', 'https', True)
