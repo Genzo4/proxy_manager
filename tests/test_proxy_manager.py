@@ -50,3 +50,42 @@ def test_add_proxy_3():
     assert pm.proxy_list[1].anonymity
 
 
+def test_get_min_used_1():
+    pm = ProxyManager(load_fate_proxy=False)
+    assert pm._get_min_used() == -1
+
+
+def test_get_min_used_2():
+    pm = ProxyManager(load_fate_proxy=False)
+    pm._add_proxy('1.2.3.4', '1234', 'http', False)
+    assert pm._get_min_used() == 0
+
+
+def test_get_min_used_3():
+    pm = ProxyManager(load_fate_proxy=False)
+    pm._add_proxy('1.2.3.4', '1234', 'http', False)
+    pm._add_proxy('4.3.2.1', '234', 'https', True)
+    pm._add_proxy('4.2.1.3', '4321', 'https', True)
+    assert pm._get_min_used() == 0
+    pm.proxy_list[0].use()
+    assert pm._get_min_used() == 0
+    pm.proxy_list[1].use()
+    pm.proxy_list[2].use()
+    assert pm._get_min_used() == 1
+
+
+def test_get_min_used_5():
+    pm = ProxyManager(load_fate_proxy=False)
+    pm._add_proxy('1.2.3.4', '1234', 'http', False)
+    pm._add_proxy('4.3.2.1', '234', 'https', True)
+    pm._add_proxy('4.2.1.3', '4321', 'https', True)
+    pm.proxy_list[1].use()
+    pm.proxy_list[2].use()
+    assert pm._get_min_used() == 0
+    pm.proxy_list[0].use()
+    assert pm._get_min_used() == 1
+    pm.proxy_list[2].use()
+    pm.proxy_list[0].use()
+    assert pm._get_min_used() == 1
+    pm.proxy_list[1].use()
+    assert pm._get_min_used() == 2
