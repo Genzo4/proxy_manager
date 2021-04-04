@@ -11,7 +11,7 @@ class ProxyManager:
 
     FATE_PROXY_URL = "https://raw.githubusercontent.com/fate0/proxylist/master/proxy.list"
 
-    def __init__(self, protocol="http", anonymity=False):
+    def __init__(self, protocol="http", anonymity=False, load_fate_proxy=True):
         """
         Конструктор
         """
@@ -19,7 +19,8 @@ class ProxyManager:
         self.anonymity = anonymity
         self.__proxy_list = []
 
-        self._load_list_from_fateproxy()
+        if load_fate_proxy:
+            self._load_list_from_fateproxy()
 
     def get_random(self) -> Proxy or None:
         """
