@@ -1,5 +1,5 @@
-import pytest
 from proxy_manager import ProxyManager
+from time import sleep
 
 
 def test_create_1():
@@ -126,9 +126,11 @@ def test_get_next_candidats():
 
 
 def test_get_random_1():
-    """
-    Проверка get_random на выдачу разных прокси
-    """
+    # Проверка на выдуачу None при пустом списке
+    pm = ProxyManager(load_fate_proxy=False)
+    assert pm.get_random() is None
+
+    # Проверка на выдачу разных прокси
 
     pm = ProxyManager(load_fate_proxy=False)
     pm._add_proxy('1.2.3.4', '1234', 'http', False)
@@ -176,3 +178,28 @@ def test_get_random_2():
         proxys.append(j)
 
     assert kolvo_otl >= 3
+
+
+def test_load_list_from_fateproxy():
+    pm = ProxyManager(protocol='http', anonymity=False, load_fate_proxy=True)
+    assert len(pm.proxy_list) > 0
+
+    sleep(2)
+
+    pm = ProxyManager(protocol='http', anonymity=True, load_fate_proxy=True)
+    assert len(pm.proxy_list) > 0
+
+    sleep(1)
+
+    pm = ProxyManager(protocol='https', anonymity=True, load_fate_proxy=True)
+    assert len(pm.proxy_list) > 0
+
+    sleep(2)
+
+    pm = ProxyManager(protocol='https', anonymity=False, load_fate_proxy=True)
+    assert len(pm.proxy_list) > 0
+
+    sleep(1)
+
+    pm = ProxyManager(protocol='htt', anonymity=False, load_fate_proxy=True)
+    assert len(pm.proxy_list) == 0
