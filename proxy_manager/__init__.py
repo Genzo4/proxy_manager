@@ -17,7 +17,7 @@ class ProxyManager:
         """
         self.protocol = protocol
         self.anonymity = anonymity
-        self.__proxy_list = []
+        self.proxy_list = []
 
         if load_fate_proxy:
             self._load_list_from_fateproxy()
@@ -122,3 +122,11 @@ class ProxyManager:
     @anonymity.setter
     def anonymity(self, anonymity=False):
         self.__anonymity = anonymity
+
+    @property
+    def proxy_list(self):
+        return self.__proxy_list
+
+    @proxy_list.setter
+    def proxy_list(self, proxy_list=[]):
+        self.__proxy_list = proxy_list
