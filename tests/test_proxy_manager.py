@@ -1,6 +1,6 @@
 from proxy_manager import ProxyManager
 from time import sleep
-from proxy_manager.consts import PROTOCOL_HTTP, PROTOCOL_HTTPS
+from proxy_manager.consts import PROTOCOL_NONE, PROTOCOL_HTTP, PROTOCOL_HTTPS
 
 
 def test_create_1():
@@ -204,3 +204,11 @@ def test_load_list_from_fateproxy():
 
     pm = ProxyManager(protocol='htt', anonymity=False, load_fate_proxy=True)
     assert len(pm.proxy_list) == 0
+
+
+def test_convert_fateproxy_type():
+    pm = ProxyManager()
+
+    assert pm.convert_fateproxy_type('http') == PROTOCOL_HTTP
+    assert pm.convert_fateproxy_type('https') == PROTOCOL_HTTPS
+    assert pm.convert_fateproxy_type('ht') == PROTOCOL_NONE
