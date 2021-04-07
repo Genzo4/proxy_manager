@@ -2,6 +2,7 @@ from proxy_manager.proxy import Proxy
 import requests
 import json
 import random
+from proxy_manager.consts import PROTOCOL_HTTP, PROTOCOL_HTTPS
 
 
 class ProxyManager:
@@ -11,7 +12,7 @@ class ProxyManager:
 
     FATE_PROXY_URL = "https://raw.githubusercontent.com/fate0/proxylist/master/proxy.list"
 
-    def __init__(self, protocol="http", anonymity=False, load_fate_proxy=True):
+    def __init__(self, protocol=PROTOCOL_HTTP, anonymity=False, load_fate_proxy=True):
         """
         Конструктор
         """
@@ -112,7 +113,7 @@ class ProxyManager:
         return self.__protocol
 
     @protocol.setter
-    def protocol(self, protocol="http"):
+    def protocol(self, protocol=PROTOCOL_HTTP):
         self.__protocol = protocol
 
     @property

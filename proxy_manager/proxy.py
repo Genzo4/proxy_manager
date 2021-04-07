@@ -1,9 +1,12 @@
+from proxy_manager.consts import PROTOCOL_HTTP, PROTOCOL_HTTPS
+
+
 class Proxy:
     """
     Класс описывающий прокси сервер
     """
 
-    def __init__(self, ip: str, port: str, protocol="http", anonymity=False):
+    def __init__(self, ip: str, port: str, protocol=PROTOCOL_HTTP, anonymity=False):
         self.ip = ip
         self.port = port
         self.protocol = protocol
@@ -40,7 +43,7 @@ class Proxy:
         return self.__protocol
 
     @protocol.setter
-    def protocol(self, protocol="http"):
+    def protocol(self, protocol=PROTOCOL_HTTP):
         self.__protocol = protocol
 
     @property
