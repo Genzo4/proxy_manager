@@ -181,6 +181,23 @@ def test_get_random_2():
     assert kolvo_otl >= 3
 
 
+def test_convert_fateproxy_type():
+    pm = ProxyManager()
+
+    assert pm.convert_fateproxy_type('http') == PROTOCOL_HTTP
+    assert pm.convert_fateproxy_type('https') == PROTOCOL_HTTPS
+    assert pm.convert_fateproxy_type('ht') == PROTOCOL_NONE
+
+
+def test_convert_fateproxy_anonymity():
+    pm = ProxyManager()
+
+    assert pm.convert_fateproxy_anonymity('anonymous') == True
+    assert pm.convert_fateproxy_anonymity('high_anonymous') == True
+    assert pm.convert_fateproxy_anonymity('transparent') == False
+    assert pm.convert_fateproxy_anonymity('hz') == False
+
+
 def test_load_list_from_fateproxy():
     pm = ProxyManager(protocol=PROTOCOL_HTTP, anonymity=False, load_fate_proxy=True)
     assert len(pm.proxy_list) > 0
@@ -207,20 +224,12 @@ def test_load_list_from_fateproxy():
     sleep(2)
 
     pm = ProxyManager(protocol=PROTOCOL_HTTPS, anonymity=False, load_fate_proxy=True)
-    assert len(pm.proxy_list) > 0
-    for p in pm.proxy_list:
-        assert p.protocol == PROTOCOL_HTTPS
-        assert not p.anonymity
+    if len(pm.proxy_list) > 0:
+        for p in pm.proxy_list:
+            assert p.protocol == PROTOCOL_HTTPS
+            assert not p.anonymity
 
     sleep(1)
 
     pm = ProxyManager(protocol='htt', anonymity=False, load_fate_proxy=True)
     assert len(pm.proxy_list) == 0
-
-
-def test_convert_fateproxy_type():
-    pm = ProxyManager()
-
-    assert pm.convert_fateproxy_type('http') == PROTOCOL_HTTP
-    assert pm.convert_fateproxy_type('https') == PROTOCOL_HTTPS
-    assert pm.convert_fateproxy_type('ht') == PROTOCOL_NONE
