@@ -80,7 +80,6 @@ class ProxyManager:
         for line in spisok.splitlines():
             load_proxy = json.loads(line)
 
-            add = False
             if self.convert_fateproxy_type(load_proxy['type']) == self.protocol \
                     and self.anonymity == self.convert_fateproxy_anonymity(load_proxy['anonymity']):
                 self._add_proxy(load_proxy['host'], load_proxy['port'], self.convert_fateproxy_type(load_proxy['type']),
