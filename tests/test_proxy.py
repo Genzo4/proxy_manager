@@ -63,3 +63,8 @@ def test_print_proxy(capsys):
     print(proxy)
     captured = capsys.readouterr()
     assert captured.out == '1.2.3.4:1234\n'
+
+
+def test_get_ip_port():
+    proxy = Proxy('1.2.3.4', 1234)
+    assert proxy.get_ip_port() == '1.2.3.4:1234'
