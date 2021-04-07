@@ -2,7 +2,7 @@ from proxy_manager.proxy import Proxy
 import requests
 import json
 import random
-from proxy_manager.consts import PROTOCOL_HTTP, PROTOCOL_HTTPS
+from proxy_manager.consts import PROTOCOL_NONE, PROTOCOL_HTTP, PROTOCOL_HTTPS
 
 
 class ProxyManager:
@@ -81,8 +81,7 @@ class ProxyManager:
             load_proxy = json.loads(line)
 
             add = False
-            if (load_proxy['type'] == 'http' and self.protocol == PROTOCOL_HTTP) \
-                    or (load_proxy['type'] == 'https' and self.protocol == PROTOCOL_HTTPS):
+            if self.convert_fateproxy_type(load_proxy['type']) == self.protocol:
                 if self.anonymity:
                     if load_proxy['anonymity'] == 'anonymous' or load_proxy['anonymity'] == 'high_anonymous':
                         add = True
@@ -90,9 +89,18 @@ class ProxyManager:
                     add = True
 
             if add:
-                self._add_proxy(load_proxy['host'], load_proxy['port'], load_proxy['type'], load_proxy['anonymity'])
+                self._add_proxy(load_proxy['host'], load_proxy['port'], self.convert_fateproxy_type(load_proxy['type']), load_proxy['anonymity'])
 
-    def _add_proxy(self, ip: str, port: str, protocol: str, anonymity: bool):
+    @staticmethod
+    def convert_fateproxy_type(type: str) -> int:
+        if type == 'http':
+            return PROTOCOL_HTTP
+        if type == 'https':
+            return PROTOCOL_HTTPS
+
+        return PROTOCOL_NONE
+
+    def _add_proxy(self, ip: str, port: int, protocol: str, anonymity: bool):
         """
         Добавление загруженного прокси в список прокси
         """

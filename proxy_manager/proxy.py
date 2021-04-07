@@ -6,7 +6,7 @@ class Proxy:
     Класс описывающий прокси сервер
     """
 
-    def __init__(self, ip: str, port: str, protocol=PROTOCOL_HTTP, anonymity=False):
+    def __init__(self, ip: str, port: int, protocol=PROTOCOL_HTTP, anonymity=False):
         self.ip = ip
         self.port = port
         self.protocol = protocol
