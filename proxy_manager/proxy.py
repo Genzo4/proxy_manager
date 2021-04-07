@@ -22,6 +22,9 @@ class Proxy:
 
         self.__used += 1
 
+    def get_ip_port(self):
+        return ":".join((self.ip, str(self.port)))
+
     @property
     def ip(self):
         return self.__ip
@@ -72,7 +75,7 @@ class Proxy:
 
     def __str__(self):
         """Overrides the default implementation"""
-        return ":".join((self.ip, str(self.port)))
+        return self.get_ip_port()
 
     def __eq__(self, other):
         """Overrides the default implementation"""
