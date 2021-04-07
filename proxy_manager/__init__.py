@@ -81,15 +81,10 @@ class ProxyManager:
             load_proxy = json.loads(line)
 
             add = False
-            if self.convert_fateproxy_type(load_proxy['type']) == self.protocol:
-                if self.anonymity:
-                    if load_proxy['anonymity'] == 'anonymous' or load_proxy['anonymity'] == 'high_anonymous':
-                        add = True
-                else:
-                    add = True
-
-            if add:
-                self._add_proxy(load_proxy['host'], load_proxy['port'], self.convert_fateproxy_type(load_proxy['type']), load_proxy['anonymity'])
+            if self.convert_fateproxy_type(load_proxy['type']) == self.protocol \
+                    and self.anonymity == self.convert_fateproxy_anonymity(load_proxy['anonymity']):
+                self._add_proxy(load_proxy['host'], load_proxy['port'], self.convert_fateproxy_type(load_proxy['type']),
+                                self.convert_fateproxy_anonymity(load_proxy['anonymity']))
 
     @staticmethod
     def convert_fateproxy_type(type: str) -> int:
@@ -99,6 +94,13 @@ class ProxyManager:
             return PROTOCOL_HTTPS
 
         return PROTOCOL_NONE
+
+    @staticmethod
+    def convert_fateproxy_anonymity(anonymity: str) -> bool:
+        if anonymity == 'anonymous' or anonymity == 'high_anonymous':
+            return True
+
+        return False
 
     def _add_proxy(self, ip: str, port: int, protocol: str, anonymity: bool):
         """
