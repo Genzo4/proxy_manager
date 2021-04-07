@@ -81,7 +81,8 @@ class ProxyManager:
             load_proxy = json.loads(line)
 
             add = False
-            if load_proxy['type'] == self.protocol:
+            if (load_proxy['type'] == 'http' and self.protocol == PROTOCOL_HTTP) \
+                    or (load_proxy['type'] == 'https' and self.protocol == PROTOCOL_HTTPS):
                 if self.anonymity:
                     if load_proxy['anonymity'] == 'anonymous' or load_proxy['anonymity'] == 'high_anonymous':
                         add = True

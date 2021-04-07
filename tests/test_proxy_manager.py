@@ -1,52 +1,53 @@
 from proxy_manager import ProxyManager
 from time import sleep
+from proxy_manager.consts import PROTOCOL_HTTP, PROTOCOL_HTTPS
 
 
 def test_create_1():
     pm = ProxyManager(load_fate_proxy=False)
-    assert pm.protocol == 'http'
+    assert pm.protocol == PROTOCOL_HTTP
     assert not pm.anonymity
     assert pm.proxy_list == []
 
 
 def test_create_2():
-    pm = ProxyManager('https', True, load_fate_proxy=False)
-    assert pm.protocol == 'https'
+    pm = ProxyManager(PROTOCOL_HTTPS, True, load_fate_proxy=False)
+    assert pm.protocol == PROTOCOL_HTTPS
     assert pm.anonymity
     assert pm.proxy_list == []
 
 
 def test_add_proxy_1():
     pm = ProxyManager(load_fate_proxy=False)
-    pm._add_proxy('1.2.3.4', '1234', 'http', False)
+    pm._add_proxy('1.2.3.4', '1234', PROTOCOL_HTTP, False)
     assert pm.proxy_list[0].ip == '1.2.3.4'
     assert pm.proxy_list[0].port == '1234'
-    assert pm.proxy_list[0].protocol == 'http'
+    assert pm.proxy_list[0].protocol == PROTOCOL_HTTP
     assert not pm.proxy_list[0].anonymity
 
 
 def test_add_proxy_2():
     pm = ProxyManager(load_fate_proxy=False)
-    pm._add_proxy('4.3.2.1', '234', 'https', True)
+    pm._add_proxy('4.3.2.1', '234', PROTOCOL_HTTPS, True)
     assert pm.proxy_list[0].ip == '4.3.2.1'
     assert pm.proxy_list[0].port == '234'
-    assert pm.proxy_list[0].protocol == 'https'
+    assert pm.proxy_list[0].protocol == PROTOCOL_HTTPS
     assert pm.proxy_list[0].anonymity
 
 
 def test_add_proxy_3():
     pm = ProxyManager(load_fate_proxy=False)
 
-    pm._add_proxy('1.2.3.4', '1234', 'http', False)
+    pm._add_proxy('1.2.3.4', '1234', PROTOCOL_HTTP, False)
     assert pm.proxy_list[0].ip == '1.2.3.4'
     assert pm.proxy_list[0].port == '1234'
-    assert pm.proxy_list[0].protocol == 'http'
+    assert pm.proxy_list[0].protocol == PROTOCOL_HTTP
     assert not pm.proxy_list[0].anonymity
 
-    pm._add_proxy('4.3.2.1', '234', 'https', True)
+    pm._add_proxy('4.3.2.1', '234', PROTOCOL_HTTPS, True)
     assert pm.proxy_list[1].ip == '4.3.2.1'
     assert pm.proxy_list[1].port == '234'
-    assert pm.proxy_list[1].protocol == 'https'
+    assert pm.proxy_list[1].protocol == PROTOCOL_HTTPS
     assert pm.proxy_list[1].anonymity
 
 
@@ -57,15 +58,15 @@ def test_get_min_used_1():
 
 def test_get_min_used_2():
     pm = ProxyManager(load_fate_proxy=False)
-    pm._add_proxy('1.2.3.4', '1234', 'http', False)
+    pm._add_proxy('1.2.3.4', '1234', PROTOCOL_HTTP, False)
     assert pm._get_min_used() == 0
 
 
 def test_get_min_used_3():
     pm = ProxyManager(load_fate_proxy=False)
-    pm._add_proxy('1.2.3.4', '1234', 'http', False)
-    pm._add_proxy('4.3.2.1', '234', 'https', True)
-    pm._add_proxy('4.2.1.3', '4321', 'https', True)
+    pm._add_proxy('1.2.3.4', '1234', PROTOCOL_HTTP, False)
+    pm._add_proxy('4.3.2.1', '234', PROTOCOL_HTTPS, True)
+    pm._add_proxy('4.2.1.3', '4321', PROTOCOL_HTTPS, True)
     assert pm._get_min_used() == 0
     pm.proxy_list[0].use()
     assert pm._get_min_used() == 0
@@ -76,9 +77,9 @@ def test_get_min_used_3():
 
 def test_get_min_used_5():
     pm = ProxyManager(load_fate_proxy=False)
-    pm._add_proxy('1.2.3.4', '1234', 'http', False)
-    pm._add_proxy('4.3.2.1', '234', 'https', True)
-    pm._add_proxy('4.2.1.3', '4321', 'https', True)
+    pm._add_proxy('1.2.3.4', '1234', PROTOCOL_HTTP, False)
+    pm._add_proxy('4.3.2.1', '234', PROTOCOL_HTTPS, True)
+    pm._add_proxy('4.2.1.3', '4321', PROTOCOL_HTTPS, True)
     pm.proxy_list[1].use()
     pm.proxy_list[2].use()
     assert pm._get_min_used() == 0
@@ -97,9 +98,9 @@ def test_get_next_candidats():
     assert len(candidats) == 0
 
     pm = ProxyManager(load_fate_proxy=False)
-    pm._add_proxy('1.2.3.4', '1234', 'http', False)
-    pm._add_proxy('4.3.2.1', '234', 'https', True)
-    pm._add_proxy('4.2.1.3', '4321', 'https', True)
+    pm._add_proxy('1.2.3.4', '1234', PROTOCOL_HTTP, False)
+    pm._add_proxy('4.3.2.1', '234', PROTOCOL_HTTPS, True)
+    pm._add_proxy('4.2.1.3', '4321', PROTOCOL_HTTPS, True)
     candidats = pm._get_next_candidats()
     assert len(candidats) == 3
     assert pm.proxy_list[0] == candidats[0]
@@ -133,9 +134,9 @@ def test_get_random_1():
     # Проверка на выдачу разных прокси
 
     pm = ProxyManager(load_fate_proxy=False)
-    pm._add_proxy('1.2.3.4', '1234', 'http', False)
-    pm._add_proxy('4.3.2.1', '234', 'https', True)
-    pm._add_proxy('4.2.1.3', '4321', 'https', True)
+    pm._add_proxy('1.2.3.4', '1234', PROTOCOL_HTTP, False)
+    pm._add_proxy('4.3.2.1', '234', PROTOCOL_HTTPS, True)
+    pm._add_proxy('4.2.1.3', '4321', PROTOCOL_HTTPS, True)
 
     proxy = pm.get_random()
     assert proxy in pm.proxy_list
@@ -165,11 +166,11 @@ def test_get_random_2():
 
     for i in range(10):
         pm = ProxyManager(load_fate_proxy=False)
-        pm._add_proxy('1.2.3.4', '1234', 'http', False)
-        pm._add_proxy('4.3.2.1', '234', 'https', True)
-        pm._add_proxy('4.2.1.3', '4321', 'https', True)
-        pm._add_proxy('4.4.4.4', '4444', 'https', True)
-        pm._add_proxy('5.5.5.5', '5555', 'https', True)
+        pm._add_proxy('1.2.3.4', '1234', PROTOCOL_HTTP, False)
+        pm._add_proxy('4.3.2.1', '234', PROTOCOL_HTTPS, True)
+        pm._add_proxy('4.2.1.3', '4321', PROTOCOL_HTTPS, True)
+        pm._add_proxy('4.4.4.4', '4444', PROTOCOL_HTTPS, True)
+        pm._add_proxy('5.5.5.5', '5555', PROTOCOL_HTTPS, True)
 
         proxy = pm.get_random()
         j = pm.proxy_list.index(proxy)
@@ -181,22 +182,22 @@ def test_get_random_2():
 
 
 def test_load_list_from_fateproxy():
-    pm = ProxyManager(protocol='http', anonymity=False, load_fate_proxy=True)
+    pm = ProxyManager(protocol=PROTOCOL_HTTP, anonymity=False, load_fate_proxy=True)
     assert len(pm.proxy_list) > 0
 
     sleep(2)
 
-    pm = ProxyManager(protocol='http', anonymity=True, load_fate_proxy=True)
+    pm = ProxyManager(protocol=PROTOCOL_HTTP, anonymity=True, load_fate_proxy=True)
     assert len(pm.proxy_list) > 0
 
     sleep(1)
 
-    pm = ProxyManager(protocol='https', anonymity=True, load_fate_proxy=True)
+    pm = ProxyManager(protocol=PROTOCOL_HTTPS, anonymity=True, load_fate_proxy=True)
     assert len(pm.proxy_list) > 0
 
     sleep(2)
 
-    pm = ProxyManager(protocol='https', anonymity=False, load_fate_proxy=True)
+    pm = ProxyManager(protocol=PROTOCOL_HTTPS, anonymity=False, load_fate_proxy=True)
     assert len(pm.proxy_list) > 0
 
     sleep(1)

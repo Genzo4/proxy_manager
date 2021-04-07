@@ -1,33 +1,34 @@
 import pytest
 from proxy_manager.proxy import Proxy
 from random import Random
+from proxy_manager.consts import PROTOCOL_HTTP, PROTOCOL_HTTPS
 
 
 def test_create_1():
     proxy = Proxy('1.2.3.4', '1234')
     assert proxy.ip == '1.2.3.4'
     assert proxy.port == '1234'
-    assert proxy.protocol == 'http'
+    assert proxy.protocol == PROTOCOL_HTTP
     assert not proxy.anonymity
     assert proxy.used == 0
     assert proxy.errors == 0
 
 
 def test_create_2():
-    proxy = Proxy('1.2.3.4', '1234', 'http', False)
+    proxy = Proxy('1.2.3.4', '1234', PROTOCOL_HTTP, False)
     assert proxy.ip == '1.2.3.4'
     assert proxy.port == '1234'
-    assert proxy.protocol == 'http'
+    assert proxy.protocol == PROTOCOL_HTTP
     assert not proxy.anonymity
     assert proxy.used == 0
     assert proxy.errors == 0
 
 
 def test_create_3():
-    proxy = Proxy('1.2.3.4', '1234', 'https', True)
+    proxy = Proxy('1.2.3.4', '1234', PROTOCOL_HTTPS, True)
     assert proxy.ip == '1.2.3.4'
     assert proxy.port == '1234'
-    assert proxy.protocol == 'https'
+    assert proxy.protocol == PROTOCOL_HTTPS
     assert proxy.anonymity
     assert proxy.used == 0
     assert proxy.errors == 0
