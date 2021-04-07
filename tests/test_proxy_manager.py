@@ -184,21 +184,33 @@ def test_get_random_2():
 def test_load_list_from_fateproxy():
     pm = ProxyManager(protocol=PROTOCOL_HTTP, anonymity=False, load_fate_proxy=True)
     assert len(pm.proxy_list) > 0
+    for p in pm.proxy_list:
+        assert p.protocol == PROTOCOL_HTTP
+        assert not p.anonymity
 
     sleep(2)
 
     pm = ProxyManager(protocol=PROTOCOL_HTTP, anonymity=True, load_fate_proxy=True)
     assert len(pm.proxy_list) > 0
+    for p in pm.proxy_list:
+        assert p.protocol == PROTOCOL_HTTP
+        assert p.anonymity
 
     sleep(1)
 
     pm = ProxyManager(protocol=PROTOCOL_HTTPS, anonymity=True, load_fate_proxy=True)
     assert len(pm.proxy_list) > 0
+    for p in pm.proxy_list:
+        assert p.protocol == PROTOCOL_HTTPS
+        assert p.anonymity
 
     sleep(2)
 
     pm = ProxyManager(protocol=PROTOCOL_HTTPS, anonymity=False, load_fate_proxy=True)
     assert len(pm.proxy_list) > 0
+    for p in pm.proxy_list:
+        assert p.protocol == PROTOCOL_HTTPS
+        assert not p.anonymity
 
     sleep(1)
 
