@@ -8,7 +8,7 @@ with open(path.join(top_level_directory, 'README.md'), encoding='utf-8') as file
 
 setup(
    name='proxy_manager',
-   version='1.0.4',
+   version='1.0.5',
    description='Proxy Manager module',
    long_description=long_description,
    author='Genzo',
