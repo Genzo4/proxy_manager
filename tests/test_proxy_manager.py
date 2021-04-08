@@ -1,6 +1,6 @@
-from proxy_manager import ProxyManager
+from proxy_manager_g4 import ProxyManager
 from time import sleep
-from proxy_manager.consts import PROTOCOL_NONE, PROTOCOL_HTTP, PROTOCOL_HTTPS
+from proxy_manager_g4.consts import PROTOCOL_NONE, PROTOCOL_HTTP, PROTOCOL_HTTPS
 
 
 def test_create_1():

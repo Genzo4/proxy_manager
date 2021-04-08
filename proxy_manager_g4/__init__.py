@@ -1,8 +1,8 @@
-from proxy_manager.proxy import Proxy
+from proxy_manager_g4.proxy import Proxy
 import requests
 import json
 import random
-from proxy_manager.consts import PROTOCOL_NONE, PROTOCOL_HTTP, PROTOCOL_HTTPS
+from proxy_manager_g4.consts import PROTOCOL_NONE, PROTOCOL_HTTP, PROTOCOL_HTTPS
 
 
 class ProxyManager:

@@ -1,7 +1,7 @@
 import pytest
-from proxy_manager.proxy import Proxy
+from proxy_manager_g4.proxy import Proxy
 from random import Random
-from proxy_manager.consts import PROTOCOL_HTTP, PROTOCOL_HTTPS
+from proxy_manager_g4.consts import PROTOCOL_HTTP, PROTOCOL_HTTPS
 
 
 def test_create_1():

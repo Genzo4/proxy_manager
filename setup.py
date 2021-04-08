@@ -7,7 +7,7 @@ with open(path.join(top_level_directory, 'README.md'), encoding='utf-8') as file
     long_description = file.read()
 
 setup(
-   name='proxy_manager',
+   name='proxy_manager_g4',
    version='1.0.5',
    description='Proxy Manager',
    long_description=long_description,
@@ -28,9 +28,9 @@ setup(
       'Operating System :: OS Independent',
       'Topic :: Internet :: Proxy Servers'
    ],
-   keywords=['proxy', 'proxy_manager', 'manager', 'proxy-manager', 'proxymanager'],
+   keywords=['proxy', 'proxy_manager', 'manager', 'proxy-manager', 'proxymanager', 'g4'],
    license='MIT',
-   packages=['proxy_manager'],
+   packages=['proxy_manager_g4'],
    install_requires=['requests'],
    python_requires='>=3.6'
 )
