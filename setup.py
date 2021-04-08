@@ -12,6 +12,8 @@ setup(
    description='Proxy Manager',
    long_description=long_description,
    long_description_content_type='text/markdown',
+   author='Genzo',
+   author_email='genzo@bk.ru',
    url='https://github.com/Genzo4/proxy_manager',
    project_urls={
            'Bug Tracker': 'https://github.com/Genzo4/proxy_manager/issues',
@@ -28,8 +30,6 @@ setup(
    ],
    keywords=['proxy', 'proxy_manager', 'manager', 'proxy-manager', 'proxymanager'],
    license='MIT',
-   author='Genzo',
-   author_email='genzo@bk.ru',
    packages=['proxy_manager'],
    install_requires=['requests'],
    python_requires='>=3.6'
