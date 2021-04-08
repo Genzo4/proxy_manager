@@ -1,5 +1,5 @@
-from proxy_manager import ProxyManager
-from proxy_manager.consts import PROTOCOL_HTTPS
+from proxy_manager_g4 import ProxyManager
+from proxy_manager_g4.consts import PROTOCOL_HTTPS
 
 proxy_list = ProxyManager(protocol=PROTOCOL_HTTPS, anonymity=True)
 
