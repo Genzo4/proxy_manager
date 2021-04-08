@@ -11,7 +11,7 @@ proxy servers from this list).
 ### Package Installation from PyPi
 
 ```bash
-pip3 install proxy-manager-g4
+$ pip3 install proxy-manager-g4
 ```
 
 ### Package Installation from Source Code
