@@ -22,6 +22,14 @@ class Proxy:
 
         self.__used += 1
 
+    def error(self):
+        """
+        Указываем что прокси выдал ошибку
+        :return: None
+        """
+
+        self.errors += 1
+
     def get_ip_port(self):
         return ":".join((self.ip, str(self.port)))
 
