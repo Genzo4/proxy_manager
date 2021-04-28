@@ -3,7 +3,7 @@ from proxy_manager_g4.consts import PROTOCOL_HTTP, PROTOCOL_HTTPS
 
 class Proxy:
     """
-    Класс описывающий прокси сервер
+    Class describing the proxy server
     """
 
     def __init__(self, ip: str, port: int, protocol=PROTOCOL_HTTP, anonymity=False):
@@ -16,7 +16,7 @@ class Proxy:
 
     def use(self):
         """
-        Используем текущий прокси
+        Use proxy
         :return: None
         """
 
@@ -24,7 +24,7 @@ class Proxy:
 
     def error(self):
         """
-        Указываем что прокси выдал ошибку
+        Add error
         :return: None
         """
 

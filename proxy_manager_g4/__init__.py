@@ -6,16 +6,10 @@ from proxy_manager_g4.consts import PROTOCOL_NONE, PROTOCOL_HTTP, PROTOCOL_HTTPS
 
 
 class ProxyManager:
-    """
-    Прокси менеджер для скрапперов
-    """
 
     FATE_PROXY_URL = "https://raw.githubusercontent.com/fate0/proxylist/master/proxy.list"
 
     def __init__(self, protocol=PROTOCOL_HTTP, anonymity=False, load_fate_proxy=True):
-        """
-        Конструктор
-        """
         self.protocol = protocol
         self.anonymity = anonymity
         self.proxy_list = []
@@ -25,7 +19,7 @@ class ProxyManager:
 
     def get_random(self) -> Proxy or None:
         """
-        Получить следующий рандомный прокси
+        Get next random proxy
         :return: Proxy
         """
 
@@ -44,7 +38,7 @@ class ProxyManager:
 
     def _get_next_candidats(self) -> list:
         """
-        Получить следующих кандидатов на выдачу (у кого самый маленький used)
+        Get the next candidates for issuance (who has the smallest used)
         :return: list
         """
 
@@ -59,7 +53,7 @@ class ProxyManager:
 
     def _get_min_used(self):
         """
-        Число минимального использования прокси
+        Minimum proxy usage number
         :return: int
         """
 
@@ -103,7 +97,7 @@ class ProxyManager:
 
     def _add_proxy(self, ip: str, port: int, protocol: str, anonymity: bool):
         """
-        Добавление загруженного прокси в список прокси
+        Adding a loaded proxy to the proxy list
         """
 
         new_proxy = Proxy(ip, port, protocol, anonymity)
