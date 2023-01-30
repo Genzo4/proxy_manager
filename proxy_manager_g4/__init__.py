@@ -16,6 +16,8 @@ class ProxyManager:
 
         if load_fate_proxy:
             self._load_list_from_fateproxy()
+            if len(self.proxy_list) == 0:
+                raise UnboundLocalError('No proxy')
 
     def get_random(self) -> Proxy or None:
         """

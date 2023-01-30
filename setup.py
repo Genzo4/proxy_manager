@@ -8,7 +8,7 @@ with open(path.join(top_level_directory, 'README.md'), encoding='utf-8') as file
 
 setup(
    name='proxy_manager_g4',
-   version='1.0.6',
+   version='1.0.7',
    description='Proxy Manager',
    long_description=long_description,
    long_description_content_type='text/markdown',
@@ -24,6 +24,8 @@ setup(
       'Programming Language :: Python :: 3.6',
       'Programming Language :: Python :: 3.7',
       'Programming Language :: Python :: 3.8',
+      'Programming Language :: Python :: 3.9',
+      'Programming Language :: Python :: 3.10',
       'License :: OSI Approved :: MIT License',
       'Operating System :: OS Independent',
       'Topic :: Internet :: Proxy Servers'

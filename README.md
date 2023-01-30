@@ -59,6 +59,8 @@ print(proxy)            # "1.2.3.4:8080"
 
 Usage example in file minitest.py
 
+[Changelog](https://github.com/Genzo4/proxy_manager/blob/main/CHANGELOG.md)
+
 ***
 
 P.S. The list of proxy servers is loaded from 
@@ -125,6 +127,8 @@ print(proxy)            # "1.2.3.4:8080"
 ```
 
 Пример использования см. в файле minitest.py
+
+[Changelog](https://github.com/Genzo4/proxy_manager/blob/main/CHANGELOG.md)
 
 ***
 
