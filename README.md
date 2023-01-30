@@ -1,4 +1,10 @@
+![Language](https://img.shields.io/badge/English-brigthgreen)
+
 # Proxy Manager
+
+![PyPI](https://img.shields.io/pypi/v/proxy-manager-g4)
+![PyPI - License](https://img.shields.io/pypi/l/proxy-manager-g4)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/proxy-manager-g4)
 
 Proxy manager to download a list of proxy servers from the Internet with the required parameters 
 (protocol and degree of anonymity) and work with loading servers (for example, getting a random
@@ -63,12 +69,19 @@ Usage example in file minitest.py
 
 ***
 
-P.S. The list of proxy servers is loaded from 
-[https://github.com/fate0/proxylist/](https://github.com/fate0/proxylist/)  
+The list of proxy servers is loaded from 
+- [https://github.com/fate0/proxylist/](https://github.com/fate0/proxylist/)
+- [https://github.com/clarketm/proxy-list/](https://github.com/clarketm/proxy-list/)
 
 ***
 
+![Language](https://img.shields.io/badge/Русский-brigthgreen)
+
 # Proxy Manager
+
+![PyPI](https://img.shields.io/pypi/v/proxy-manager-g4)
+![PyPI - License](https://img.shields.io/pypi/l/proxy-manager-g4)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/proxy-manager-g4)
 
 Прокси менеджер для загрузки из интернета списка прокси серверов с требуемыми параметрами 
 (протокол и степень анонимности) и работы с загруженными серверами (например, получение случайного 
@@ -132,6 +145,7 @@ print(proxy)            # "1.2.3.4:8080"
 
 ***
 
-P.S. Пока загрузка списка прокси-серверов осуществляется с 
-[https://github.com/fate0/proxylist/](https://github.com/fate0/proxylist/)  
+Загрузка списка прокси-серверов осуществляется с 
+- [https://github.com/fate0/proxylist/](https://github.com/fate0/proxylist/)
+- [https://github.com/clarketm/proxy-list/](https://github.com/clarketm/proxy-list/)
 

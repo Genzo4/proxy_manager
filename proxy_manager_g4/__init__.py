@@ -1,23 +1,44 @@
-from proxy_manager_g4.proxy import Proxy
 import requests
 import json
 import random
+import re
+
+from proxy_manager_g4.proxy import Proxy
 from proxy_manager_g4.consts import PROTOCOL_NONE, PROTOCOL_HTTP, PROTOCOL_HTTPS
 
 
 class ProxyManager:
 
-    FATE_PROXY_URL = "https://raw.githubusercontent.com/fate0/proxylist/master/proxy.list"
+    FATE_PROXY_URL = 'https://raw.githubusercontent.com/fate0/proxylist/master/proxy.list'
+    CLARKETM_PROXY_URL = 'https://raw.githubusercontent.com/clarketm/proxy-list/master/proxy-list.txt'
 
-    def __init__(self, protocol=PROTOCOL_HTTP, anonymity=False, load_fate_proxy=True):
+    def __init__(self,
+                 protocol=PROTOCOL_HTTP,
+                 anonymity: bool = False,
+                 dont_load_proxy: bool = False,
+                 load_fate_proxy: bool = True,
+                 load_clarketm_proxy: bool = True
+                 ):
         self.protocol = protocol
         self.anonymity = anonymity
         self.proxy_list = []
 
-        if load_fate_proxy:
-            self._load_list_from_fateproxy()
-            if len(self.proxy_list) == 0:
-                raise UnboundLocalError('No proxy')
+        if not dont_load_proxy:
+            if load_fate_proxy:
+                self.load_list_from_fate_proxy()
+
+            if load_clarketm_proxy:
+                self.load_list_from_clarketm_proxy()
+
+            if load_fate_proxy or load_clarketm_proxy:
+                if len(self.proxy_list) == 0:
+                    raise UnboundLocalError('No proxy')
+
+    def clear(self):
+        self.proxy_list.clear()
+
+    def proxy_count(self):
+        return len(self.proxy_list)
 
     def get_random(self) -> Proxy or None:
         """
@@ -68,9 +89,7 @@ class ProxyManager:
 
         return kolvo
 
-    def _load_list_from_fateproxy(self):
-        self.__proxy_list.clear()
-
+    def load_list_from_fate_proxy(self):
         spisok = self._get_url(self.FATE_PROXY_URL)
 
         for line in spisok.splitlines():
@@ -78,8 +97,36 @@ class ProxyManager:
 
             if self.convert_fateproxy_type(load_proxy['type']) == self.protocol \
                     and self.anonymity == self.convert_fateproxy_anonymity(load_proxy['anonymity']):
-                self._add_proxy(load_proxy['host'], load_proxy['port'], self.convert_fateproxy_type(load_proxy['type']),
-                                self.convert_fateproxy_anonymity(load_proxy['anonymity']))
+                self.add_proxy(load_proxy['host'], load_proxy['port'], self.convert_fateproxy_type(load_proxy['type']),
+                               self.convert_fateproxy_anonymity(load_proxy['anonymity']))
+
+    def load_list_from_clarketm_proxy(self):
+        spisok = self._get_url(self.CLARKETM_PROXY_URL)
+
+        proxy_pattern = re.compile(r'(\d+\.\d+\.\d+\.\d+):(\d+)\s(..)-(.)\-?(S|)\!?\s(\+|\-)')
+
+        for line in spisok.splitlines():
+            p = proxy_pattern.search(line)
+            if p is not None:
+                p_type = self.convert_clarketm_proxy_type(p[5])
+                p_anonym = self.convert_clarketm_proxy_anonymity(p[4])
+
+                if p_type == self.protocol and p_anonym == self.anonymity:
+                    self.add_proxy(p[1], p[2], p_type, p_anonym)
+
+    @staticmethod
+    def convert_clarketm_proxy_type(type: str) -> int:
+        if type == 'S':
+            return PROTOCOL_HTTPS
+
+        return PROTOCOL_HTTP
+
+    @staticmethod
+    def convert_clarketm_proxy_anonymity(anonymity: str) -> bool:
+        if anonymity == 'N':
+            return False
+
+        return True
 
     @staticmethod
     def convert_fateproxy_type(type: str) -> int:
@@ -97,7 +144,7 @@ class ProxyManager:
 
         return False
 
-    def _add_proxy(self, ip: str, port: int, protocol: str, anonymity: bool):
+    def add_proxy(self, ip: str, port: int, protocol: str, anonymity: bool):
         """
         Adding a loaded proxy to the proxy list
         """
@@ -107,7 +154,8 @@ class ProxyManager:
         if new_proxy not in self.__proxy_list:
             self.__proxy_list.append(new_proxy)
 
-    def _get_url(self, proxy_url: str):
+    @staticmethod
+    def _get_url(proxy_url: str):
         r = requests.get(proxy_url, headers={
             "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/60.0"
             })
