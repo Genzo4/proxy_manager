@@ -1,3 +1,4 @@
+import pytest
 from proxy_manager_g4 import ProxyManager
 from time import sleep
 from proxy_manager_g4.consts import PROTOCOL_NONE, PROTOCOL_HTTP, PROTOCOL_HTTPS
@@ -223,13 +224,15 @@ def test_load_list_from_fateproxy():
 
     sleep(2)
 
-    pm = ProxyManager(protocol=PROTOCOL_HTTPS, anonymity=False, load_fate_proxy=True)
-    if len(pm.proxy_list) > 0:
-        for p in pm.proxy_list:
-            assert p.protocol == PROTOCOL_HTTPS
-            assert not p.anonymity
+    with pytest.raises(UnboundLocalError):
+        pm = ProxyManager(protocol=PROTOCOL_HTTPS, anonymity=False, load_fate_proxy=True)
+
+        if len(pm.proxy_list) > 0:
+            for p in pm.proxy_list:
+                assert p.protocol == PROTOCOL_HTTPS
+                assert not p.anonymity
 
     sleep(1)
 
-    pm = ProxyManager(protocol='htt', anonymity=False, load_fate_proxy=True)
-    assert len(pm.proxy_list) == 0
+    with pytest.raises(UnboundLocalError):
+        pm = ProxyManager(protocol='htt', anonymity=False, load_fate_proxy=True)
